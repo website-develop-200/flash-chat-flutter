@@ -45,6 +45,7 @@ class _ChatScreenState extends State<ChatScreen> {
               icon: Icon(Icons.close),
               onPressed: () {
                 _auth.signOut();
+
                 Navigator.pushNamed(context, WelcomeScreen.id);
               }),
         ],
@@ -73,7 +74,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                     );
                   }
-                  final msg = snapshots.data.docs.reversed;
+                  final msg = snapshots.data.docs;
+                  msg.sort(
+                      (a, b) => b.data()["time"].compareTo(a.data()["time"]));
                   for (var document in msg) {
                     String text = document.data()["text"];
                     String sender = document.data()["Messaged By"];
